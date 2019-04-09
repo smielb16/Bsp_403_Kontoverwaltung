@@ -9,6 +9,6 @@ package bl;
  *
  * @author elisc
  */
-public class Konto {
+public class Account {
     
 }
