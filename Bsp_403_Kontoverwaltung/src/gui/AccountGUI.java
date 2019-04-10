@@ -138,7 +138,7 @@ public class AccountGUI extends javax.swing.JFrame {
 
     private void pumLogMenuAddAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pumLogMenuAddAccountActionPerformed
         account = new Account(50);
-        lbBalance.setText("" + account.getBalance());
+        lbBalance.setText(account.getBalance() + " €");
     }//GEN-LAST:event_pumLogMenuAddAccountActionPerformed
 
     private void pumUserMenuAccountTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pumUserMenuAccountTestActionPerformed
@@ -164,7 +164,7 @@ public class AccountGUI extends javax.swing.JFrame {
     }
 
     public void updateBalance(int balance) {
-        this.lbBalance.setText("" + balance);
+        this.lbBalance.setText(balance + " €");
     }
 
     /**

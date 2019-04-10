@@ -34,7 +34,7 @@ public class AccountUser implements Runnable{
         Random random = new Random();
         
         for (int i = 0; i < numberOfOperations; i++) {
-            balanceOperation = true; //random.nextBoolean();
+            balanceOperation = random.nextBoolean();
             value = random.nextInt(50 - 10 + 1) + 10;
             sleepTime = random.nextInt(1000 - 1 + 1) + 1;
 
