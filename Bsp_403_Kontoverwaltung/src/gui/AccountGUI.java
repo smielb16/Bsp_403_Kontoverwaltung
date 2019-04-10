@@ -5,17 +5,26 @@
  */
 package gui;
 
+import bl.Account;
+import bl.AccountUser;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author elisc
  */
 public class AccountGUI extends javax.swing.JFrame {
-
+    
+    private Account account;
+    private DefaultListModel dlm = new DefaultListModel();
+    
     /**
      * Creates new form KontoGUI
      */
     public AccountGUI() {
         initComponents();
+        this.ltUser.setModel(dlm);
     }
 
     /**
@@ -127,15 +136,19 @@ public class AccountGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pumLogMenuAddAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pumLogMenuAddAccountActionPerformed
-        // TODO add your handling code here:
+        account = new Account(50.0);
+        lbAccount.setText(""+account.getBalance());
     }//GEN-LAST:event_pumLogMenuAddAccountActionPerformed
 
     private void pumUserMenuAccountTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pumUserMenuAccountTestActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_pumUserMenuAccountTestActionPerformed
 
     private void pumUserMenuAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pumUserMenuAddUserActionPerformed
-        // TODO add your handling code here:
+        String username = JOptionPane.showInputDialog("Enter username: ");
+        AccountUser user = new AccountUser(username);
+        account.addUser(user);
+        dlm.addElement(user);
     }//GEN-LAST:event_pumUserMenuAddUserActionPerformed
 
     /**

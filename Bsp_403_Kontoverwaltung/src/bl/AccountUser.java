@@ -9,6 +9,17 @@ package bl;
  *
  * @author elisc
  */
-public class AccountUser {
+public class AccountUser implements Runnable{
+
+    private String username;
+    
+    public AccountUser(String username) {
+        this.username = username;
+    }   
+    
+    @Override
+    public void run() {
+        
+    }
     
 }
