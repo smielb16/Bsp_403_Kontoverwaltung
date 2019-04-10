@@ -15,10 +15,10 @@ import javax.swing.JOptionPane;
  * @author elisc
  */
 public class AccountGUI extends javax.swing.JFrame {
-    
+
     private Account account;
     private DefaultListModel dlm = new DefaultListModel();
-    
+
     /**
      * Creates new form KontoGUI
      */
@@ -47,14 +47,14 @@ public class AccountGUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         ltUser = new javax.swing.JList<>();
         jInternalFrame2 = new javax.swing.JInternalFrame();
-        lbAccount = new javax.swing.JLabel();
+        lbBalance = new javax.swing.JLabel();
         jInternalFrame3 = new javax.swing.JInternalFrame();
         jScrollPane2 = new javax.swing.JScrollPane();
         taLog = new javax.swing.JTextArea();
 
-        pumLogMenu.setText("jMenu1");
+        pumLogMenu.setText("Log");
 
-        pumLogMenuAddAccount.setText("jMenuItem1");
+        pumLogMenuAddAccount.setText("Make Account");
         pumLogMenuAddAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pumLogMenuAddAccountActionPerformed(evt);
@@ -64,9 +64,9 @@ public class AccountGUI extends javax.swing.JFrame {
 
         pumLog.add(pumLogMenu);
 
-        pumUserMenu.setText("jMenu1");
+        pumUserMenu.setText("User");
 
-        pumUserMenuAddUser.setText("jMenuItem1");
+        pumUserMenuAddUser.setText("Add User");
         pumUserMenuAddUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pumUserMenuAddUserActionPerformed(evt);
@@ -74,7 +74,7 @@ public class AccountGUI extends javax.swing.JFrame {
         });
         pumUserMenu.add(pumUserMenuAddUser);
 
-        pumUserMenuAccountTest.setText("jMenuItem1");
+        pumUserMenuAccountTest.setText("Perform Test");
         pumUserMenuAccountTest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pumUserMenuAccountTestActionPerformed(evt);
@@ -94,13 +94,14 @@ public class AccountGUI extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        ltUser.setComponentPopupMenu(pumUser);
         jScrollPane1.setViewportView(ltUser);
 
         jInternalFrame1.getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jInternalFrame2.setTitle("Account");
         jInternalFrame2.setVisible(true);
-        jInternalFrame2.getContentPane().add(lbAccount, java.awt.BorderLayout.CENTER);
+        jInternalFrame2.getContentPane().add(lbBalance, java.awt.BorderLayout.CENTER);
 
         jInternalFrame3.setTitle("Log-output");
         jInternalFrame3.setVisible(true);
@@ -136,20 +137,35 @@ public class AccountGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pumLogMenuAddAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pumLogMenuAddAccountActionPerformed
-        account = new Account(50.0);
-        lbAccount.setText(""+account.getBalance());
+        account = new Account(50);
+        lbBalance.setText("" + account.getBalance());
     }//GEN-LAST:event_pumLogMenuAddAccountActionPerformed
 
     private void pumUserMenuAccountTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pumUserMenuAccountTestActionPerformed
-        
+        int[] indices = ltUser.getSelectedIndices();
+        for (int index : indices) {
+            new Thread((AccountUser) dlm.getElementAt(index)).start();
+        }
     }//GEN-LAST:event_pumUserMenuAccountTestActionPerformed
 
     private void pumUserMenuAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pumUserMenuAddUserActionPerformed
-        String username = JOptionPane.showInputDialog("Enter username: ");
-        AccountUser user = new AccountUser(username);
-        account.addUser(user);
-        dlm.addElement(user);
+        if (account != null) {
+            String username = JOptionPane.showInputDialog("Enter username: ");
+            AccountUser user = new AccountUser(username, account, this);
+            dlm.addElement(user);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "No account added!");
+        }
     }//GEN-LAST:event_pumUserMenuAddUserActionPerformed
+
+    public void updateLog(String log) {
+        this.taLog.append(log);
+    }
+
+    public void updateBalance(int balance) {
+        this.lbBalance.setText("" + balance);
+    }
 
     /**
      * @param args the command line arguments
@@ -193,7 +209,7 @@ public class AccountGUI extends javax.swing.JFrame {
     private javax.swing.JInternalFrame jInternalFrame3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lbAccount;
+    private javax.swing.JLabel lbBalance;
     private javax.swing.JList<String> ltUser;
     private javax.swing.JPopupMenu pumLog;
     private javax.swing.JMenu pumLogMenu;

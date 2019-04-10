@@ -5,26 +5,27 @@
  */
 package bl;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author elisc
  */
 public class Account {
 
-    private ArrayList<AccountUser> users = new ArrayList<>();
-    private double balance;
+    private int balance;
     
-    public Account(double balance) {
+    public Account(int balance) {
         this.balance = balance;
     }
     
-    public void addUser(AccountUser user){
-        users.add(user);
+    public synchronized void deposit(int value){
+        this.balance += value;
     }
     
-    public double getBalance(){
+    public synchronized void withdraw(int value){
+        this.balance -= value;
+    }
+
+    public int getBalance() {
         return balance;
     }
         
